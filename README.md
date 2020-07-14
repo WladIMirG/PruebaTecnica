@@ -11,8 +11,7 @@ Instrucciones:
             **pip install --upgrade pip**
 
     *** Instalacion de las dependencias:
-            Ubicate con la terminal en le directorio crud_report/ (cd crud_report o dir crud_report) y
-            ejecuta el siguiente comando:
+            Ubicate con la terminal en le directorio y ejecuta el siguiente comando:
 
                 pip install -r requirements.txt
 
