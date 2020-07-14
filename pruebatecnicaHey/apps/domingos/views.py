@@ -9,10 +9,14 @@ def domingos(request, *args, **kwargs):
     if request.method == 'GET':
         # FECHA_INICIO = date(1901,1,1)
         # FECHA_FINAL = date(2000,12,31)
-        if request.query_params:
-            FECHA_INICIO = request.query_params['initial_date']
-            FECHA_FINAL = request.query_params['final_date']
-            DAY = request.query_params['wday']
+        params = request.query_params
+        if params.get('initial_date', None) and params.get('final_date', None) :
+            FECHA_INICIO = params['initial_date']
+            FECHA_FINAL = params['final_date']
+            if params.get('wday', None):
+                DAY = params['wday']
+            else:
+                DAY = 'Sunday'
             cons = Consultor(initial_date=FECHA_INICIO, final_date=FECHA_FINAL, nds=DAY)
         else:
             cons = Consultor()

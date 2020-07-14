@@ -20,4 +20,5 @@ from apps.domingos import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('apps.domingos.urls')),
+    path('', include('apps.keylog.urls')),
 ]

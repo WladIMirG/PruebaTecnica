@@ -1,88 +1,33 @@
 
-def cantidadDeHijos(numeros, datos):
-
-    """De acuerdo a los dígitos y a las combinaciones, se hace un conteo de predecesores o hijos por cada dígito"""
-    nSucc = list()
-    print ('Numero', numeros)
-    print ('Este es el dato', datos)
-    for numero in numeros:
-        suc_c = list()
-        print ('_____________________Numero', numero)
-        for dato in datos:
-            try:
-                index = dato.index(numero)
-                #print ('Este es el dato', dato)
-                #print (index)
-                suc_c.extend(list(dato[index + 1 :]))
-            except ValueError:
-                continue
-        print (suc_c)
-        print (set(suc_c))
-        nSucc.append((len(set(suc_c)), numero))
-    print (nSucc)
-    return nSucc
-                
-
-def obtenerDatos():
-
-    """Lee el contenido del archivo keylog.txt"""
-
-    return set([str(number.rstrip()) for number in open("documentos/keylog.txt", "r")])
-
-def obtenerDigitos(datos):
-    """Obtiene los dígitos únicos que componen la contraseña buscada"""
-    caracteres = set()
-    for dato in datos:
-        for c in dato:
-            caracteres.add(c)
-    return caracteres
-
-
 class KeyLog(object):
-    def __init__(self, ):
-        pass
-    pass
-    
-    
-    def dataRead():
-        return set([str(number.rstrip()) for number in open("documentos/keylog.txt", "r")])
+    def __init__(self, data=None):
+        if data is not None:
+            self.data=set(data)
+        else:
+            self.data = self.dataRead()
+        self.dig = self.digitO()
+
+    def dataRead(self):
+        return set([str(num.rstrip()) for num in open("documentos/keylog.txt", "r")])
         
-    def digitO(datos):
-        """Obtiene los dígitos únicos que componen la contraseña buscada"""
-        caracteres = set()
-        for dato in datos:
-            for c in dato:
-                caracteres.add(c)
-        return caracteres
+    def digitO(self):
+        dig = set()
+        for dat in self.data: [dig.add(c) for c in dat]
+        return dig
 
-    def cantidadDeHijos(numeros, datos):
-
-        """De acuerdo a los dígitos y a las combinaciones, se hace un conteo de predecesores o hijos por cada dígito"""
-        nSucc = list()
-        print ('Numero', numeros)
-        print ('Este es el dato', datos)
-        for numero in numeros:
-            suc_c = list()
-            print ('_____________________Numero', numero)
-            for dato in datos:
+    def nSucc(self):
+        nSucc = []
+        for num in self.dig:
+            suc_c = []
+            for dat in self.data:
                 try:
-                    index = dato.index(numero)
-                    #print ('Este es el dato', dato)
-                    #print (index)
-                    suc_c.extend(list(dato[index + 1 :]))
+                    index = dat.index(num)
+                    suc_c.extend(list(dat[index+1:]))
                 except ValueError:
                     continue
-            print (suc_c)
-            print (set(suc_c))
-            nSucc.append((len(set(suc_c)), numero))
-        print (nSucc)
+            nSucc.append((len(set(suc_c)), num))
         return nSucc
-if __name__ == "__main__":
-    datos = obtenerDatos()
-    digitos = obtenerDigitos(datos)
-    numero_hijos = cantidadDeHijos(digitos, datos)
-    
-    #Organizo los numeros de mayor a menor número de predecesores.
-    print(sorted(numero_hijos, reverse=True))
-    solucion = ''.join([x[1] for x in sorted(numero_hijos, reverse=True)])
-    print ("La contraseña buscada es {0}".format(solucion))
+
+    def passw(self):
+        passw = ''.join([n[1] for n in sorted(self.nSucc(), reverse=True)])
+        return passw
