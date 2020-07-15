@@ -3,10 +3,8 @@ from dateutil.rrule import rrule, MONTHLY
 
 class Consultor(object):
     def __init__(self, initial_date='1901-01-01', final_date='2000-12-31', nds = "Sunday"):
-        fi = tuple(initial_date.split('-'))
-        ff = tuple(final_date.split('-'))
-        self.initial_date = date(int(fi[0]),int(fi[1]),int(fi[2]))
-        self.final_date = date(int(ff[0]),int(ff[1]),int(ff[2]))
+        self.initial_date = date.fromisoformat(initial_date)
+        self.final_date = date.fromisoformat(final_date)
         self.ndw = nds
 
     def domingos(self):
